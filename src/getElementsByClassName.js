@@ -3,28 +3,24 @@
 //   return document.getElementsByClassName(className);
 // };
 
-// But instead we're going to implement it from scratch:
-var getElementsByClassName = function(className
-) {
-  var result = [];	
-  	getElementByClass = function (className){
-  		if(!nodes){
-  			var classList = nodes.classList;
-  			if(nodes.length){
-  				for(var i = 0; i < nodes.length; i++){
-  					if(nodes[i].classList){
-						getElementByClass(nodes[i])
-					}
-  				}
-  			}
-  			else {
-  				if(classList){
-  					result.push(nodes);
-  				}
-  				getElementByClass(nodes.childNodes);
-  			}
-  		}
-  	}
-  	getElementByClass(document.body);
-  	return result;
-};
+// But instead we're going to implement it from scratch:(function(){
+
+
+var getElementsByClassName = function(className) {
+	var result = [];
+	function inspectElement(element, result) {
+		var children = element.children;
+		var index = element.className.split(" ");
+		//splitting into an array
+		if(index.indexOf(className) >= 0) {
+			result.push(element);
+		}
+		for (var i = 0; i < children.length; i++) {
+			inspectElement(children[i], result);
+			//uses recursion to check for nested elements to be extracted
+		}
+	}
+	//base case mace trace lace grace face vase race pace ace 
+	inspectElement(document.body, result);
+	return result;
+}
